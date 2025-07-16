@@ -6,10 +6,11 @@ import {
   MdOutlinePayment,
   MdFormatListNumbered,
 } from "react-icons/md";
-import { FaExclamation, FaTeamspeak } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
+import { FaExclamation } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  
   const storeValueSelector = useSelector((state) => state.side_menu.role);
   const adminSideMenu = {
     Admin: [
@@ -29,8 +30,6 @@ const Sidebar = () => {
       { label: "Coach", icon: <MdFormatListNumbered /> },
     ],
   };
-
-
 
   return (
     <>
@@ -93,7 +92,10 @@ const Sidebar = () => {
         <ul class="menu-inner py-1">
           {adminSideMenu[storeValueSelector]?.map((data, index) => (
             <li className="menu-item my-3" key={index}>
-              <a href="#" className="menu-link d-flex gap-4 justify-content-between fs-5">
+              <a
+                href="#"
+                className="menu-link d-flex gap-4 justify-content-between fs-5"
+              >
                 <div>{data.label}</div>
                 <div>
                   <span>{data.icon}</span>

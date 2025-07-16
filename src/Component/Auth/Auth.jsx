@@ -14,16 +14,12 @@ const Auth = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data, "data");
-
     const { email, passwords } = data;
     if (email === "masum@gmail.com" && passwords === "Test@123") {
       dispatch(dynamic_menu_bar("Admin"));
-      console.log(dispatch(dynamic_menu_bar("Admin")), "Admin");
       navigate("/dashboard");
     } else if (email === "org@gmail.com" && passwords === "Test@123") {
       dispatch(dynamic_menu_bar("Organizer"));
-      console.log(dispatch(dynamic_menu_bar("Organizer")), "Organizer");
       navigate("/dashboard");
     } else {
       alert("Invalid Credentials");
@@ -148,7 +144,7 @@ const Auth = () => {
                       <i className="ti ti-eye-off"></i>
                     </span>
                   </div>
-                  {errors.password && (
+                  {errors.passwords && (
                     <p className="text-danger">This field is required</p>
                   )}
                 </div>
@@ -170,9 +166,7 @@ const Auth = () => {
                     </a>
                   </div>
                 </div>
-                {/* <Link to='/dashboard'> */}
                 <input className="btn btn-primary d-grid w-100" type="Submit" />
-                {/* </Link> */}
               </form>
 
               <p className="text-center">

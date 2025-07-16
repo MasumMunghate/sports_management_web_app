@@ -10,7 +10,7 @@ const Registration = () => {
     formState: { errors },
   } = useForm();
   const handleRegistration = (data) => {
-    console.log(data.username);
+    // console.log(data.username);
     navigate("/general_information");
   };
   return (
@@ -81,7 +81,6 @@ const Registration = () => {
               <h4 class="mb-1">Adventure starts here 🚀</h4>
               <p class="mb-6">Make your app management easy and fun!</p>
 
-              
               <form
                 id="formAuthentication"
                 class="mb-6"
@@ -136,14 +135,22 @@ const Registration = () => {
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="number"
                       defaultValue=""
-                      {...register("mobile_number", { required: true })}
+                      {...register("mobile_number", {
+                        required: "Mobile number is required",
+                        pattern: {
+                          value: /^[0-9]{10}$/,
+                          message: "Only 10-digit number is valid",
+                        },
+                      })}
                     />
                     <span class="input-group-text cursor-pointer">
                       <i class="ti ti-eye-off"></i>
                     </span>
                   </div>
                   {errors.mobile_number && (
-                    <p className="text-danger">This field is required</p>
+                    <p className="text-danger">
+                      {errors.mobile_number.message}
+                    </p>
                   )}
                 </div>
 
@@ -160,14 +167,22 @@ const Registration = () => {
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
                       defaultValue=""
-                      {...register("password", { required: true })}
+                      {...register("password", {
+                        required: "This field is required",
+                        pattern: {
+                          value:
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          message:
+                            "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
+                        },
+                      })}
                     />
                     <span class="input-group-text cursor-pointer">
                       <i class="ti ti-eye-off"></i>
                     </span>
                   </div>
                   {errors.password && (
-                    <p className="text-danger">This field is required</p>
+                    <p className="text-danger">{errors.password.message}</p>
                   )}
                 </div>
 

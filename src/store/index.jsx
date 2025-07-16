@@ -5,7 +5,7 @@ import menuSlice from "./MenuSlice/MenuSlice";
 
 const store = configureStore({
   reducer: {
-    side_menu: menuSlice,
+    side_menu: menuSlice, //name of first slice (sidebar)
   },
 });
 

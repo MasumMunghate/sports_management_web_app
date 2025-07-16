@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa";
@@ -12,11 +13,31 @@ const Payment = () => {
     formState: { errors },
   } = useForm();
 
-  const handleCheckBox = (data)=>{
-    console.log(data),
-    navigate("/");
-  }
+  const handleCheckBox = async (data) => {
+   
+ try {
+   const payload = {
+      amount: 25000,
+    };
+    const config = {
+      url: "http://localhost:8080/app/user/strip-payment",
+      method: "POST",
+      data: payload,
+    };
+    const response = await axios(config);
+    console.log(response,'response');
+    
+   if (response.data?.url) {
+      window.location.href = response.data.url;
+    } else {
+      alert("Something went wrong, no checkout URL received.");
+    }
 
+ } catch (error) {
+   console.error("Payment error:", err);
+    alert("Payment failed. Try again.");
+ }
+  };
 
   return (
     <>
@@ -66,29 +87,33 @@ const Payment = () => {
                   id="terms-conditions"
                   name="terms"
                   defaultValue=""
-                 {...register("payment_checkbox", { required: true })}
+                  {...register("payment_checkbox", { required: true })}
                 />
                 <label class="" for="terms-conditions">
                   I agree to By clicking this, you agree to our Terms and
                   Conditions and Privacy Policy.
                 </label>
                 <small>
-                {errors.payment_checkbox && (
-                  <small className="text-danger">
-                    This is This felid is required
-                  </small>
-                )}
-              </small>
+                  {errors.payment_checkbox && (
+                    <small className="text-danger">
+                      This is This felid is required
+                    </small>
+                  )}
+                </small>
               </div>
-              
             </div>
-            
-             <button class="btn btn-primary d-grid w-75 m-auto" type="submit" value="Next">Next</button>
-            
+
+            <button
+              class="btn btn-primary d-grid w-75 m-auto"
+              type="submit"
+              value="Next"
+            >
+              Next
+            </button>
           </form>
 
           <h1 className="display-4 w-75 m-auto">Rs 25000.00/-</h1>
-         
+
           {/* Need to payment integration  */}
         </div>
       </div>
