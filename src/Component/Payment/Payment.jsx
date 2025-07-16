@@ -14,29 +14,26 @@ const Payment = () => {
   } = useForm();
 
   const handleCheckBox = async (data) => {
-   
- try {
-   const payload = {
-      amount: 25000,
-    };
-    const config = {
-      url: "http://localhost:8080/app/user/strip-payment",
-      method: "POST",
-      data: payload,
-    };
-    const response = await axios(config);
-    console.log(response,'response');
-    
-   if (response.data?.url) {
-      window.location.href = response.data.url;
-    } else {
-      alert("Something went wrong, no checkout URL received.");
-    }
 
- } catch (error) {
-   console.error("Payment error:", err);
-    alert("Payment failed. Try again.");
- }
+    try {
+      const payload = {
+        amount: 25000,
+      };
+      const config = {
+        url: "http://localhost:8080/app/user/strip-payment",
+        method: "POST",
+        data: payload,
+      };
+      const response = await axios(config);
+      if (response.data?.url) {
+        window.location.href = response.data.url;
+      } else {
+        alert("Something went wrong, no checkout URL received.");
+      }
+    } catch (error) {
+      console.error("Payment error:", err);
+      alert("Payment failed. Try again.");
+    }
   };
 
   return (

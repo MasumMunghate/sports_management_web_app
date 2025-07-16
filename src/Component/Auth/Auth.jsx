@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { dynamic_menu_bar } from "../../store/MenuSlice/MenuSlice";
@@ -13,18 +13,35 @@ const Auth = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
+    fetchAPI(data);
+  };
+  const fetchAPI = async (data) => {
     const { email, passwords } = data;
-    if (email === "masum@gmail.com" && passwords === "Test@123") {
-      dispatch(dynamic_menu_bar("Admin"));
-      navigate("/dashboard");
-    } else if (email === "org@gmail.com" && passwords === "Test@123") {
-      dispatch(dynamic_menu_bar("Organizer"));
-      navigate("/dashboard");
-    } else {
-      alert("Invalid Credentials");
+    try {
+      const payload = {
+        email,
+        password: passwords,
+      };
+      const response = await fetch("http://localhost:8080/app/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        dispatch(dynamic_menu_bar(result.result.role));
+        navigate("/dashboard");
+      } else {
+        alert(result.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
     }
   };
+
 
   return (
     <>
@@ -124,6 +141,7 @@ const Auth = () => {
                     <p className="text-danger">This field is required</p>
                   )}
                 </div>
+
                 <div className="mb-6 form-password-toggle">
                   <label className="form-label" for="password">
                     Password
@@ -156,6 +174,7 @@ const Auth = () => {
                         type="checkbox"
                         id="remember-me"
                       />
+
                       <label className="form-check-label" for="remember-me">
                         {" "}
                         Remember Me{" "}

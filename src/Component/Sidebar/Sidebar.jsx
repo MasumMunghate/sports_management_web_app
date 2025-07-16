@@ -10,10 +10,9 @@ import { FaExclamation } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  
   const storeValueSelector = useSelector((state) => state.side_menu.role);
   const adminSideMenu = {
-    Admin: [
+    1: [
       { label: "Dashboard", icon: <MdDashboard /> },
       { label: "Organizer", icon: <MdOutlinePeopleAlt /> },
       { label: "Incomplete Registration", icon: <FaExclamation /> },
@@ -21,7 +20,7 @@ const Sidebar = () => {
       { label: "Payment", icon: <MdOutlinePayment /> },
       { label: "Player List2", icon: <MdFormatListNumbered /> },
     ],
-    Organizer: [
+    2: [
       { label: "Dashboard", icon: <MdDashboard /> },
       { label: "Event", icon: <MdOutlinePeopleAlt /> },
       { label: "Payment", icon: <FaExclamation /> },
@@ -30,7 +29,7 @@ const Sidebar = () => {
       { label: "Coach", icon: <MdFormatListNumbered /> },
     ],
   };
-
+const sideMenuItems = adminSideMenu[storeValueSelector] || [];
   return (
     <>
       <aside
@@ -90,7 +89,7 @@ const Sidebar = () => {
         <div class="menu-inner-shadow"></div>
 
         <ul class="menu-inner py-1">
-          {adminSideMenu[storeValueSelector]?.map((data, index) => (
+          {sideMenuItems?.map((data, index) => (
             <li className="menu-item my-3" key={index}>
               <a
                 href="#"
